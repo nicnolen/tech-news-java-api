@@ -25,8 +25,13 @@ public class User {
     @Transient
     boolean loggedIn;
 
-    // lists are collections of objects of the same type
+    // lists are collections of objects of the same type. @OneToMany creates the relationships between tables automatically
+    // Use FetchType.EAGER to gather all necessary information for the list immediately after being created. CAN ONLY BE ONE IN A LIST
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Post> posts;
+    // Need to use FetchType.LAZY to gather information for the list as needed
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<vote> votes;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
 }
