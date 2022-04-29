@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 // specify an integer to make sure the repository can take User and the id of that user
 public interface UserRepository extends JpaRepository<User, Integer> {
     // find a user by email
-    User.findUserByEmail(String email) throws Exception;
+    User findUserByEmail(String email) throws Exception;
 }
