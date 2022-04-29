@@ -13,6 +13,7 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //specifies the name of the table that this class maps to. If this annotation isn't present, the table name will be the class name by default.
 @Table(name = "user")
+//  Serializable informs the Java Virtual Machine that this model will be "serialized", or coverted into a bytestream in order to store entries for these models in a database
 public class User implements Serializable {
     // id will be used as the unique identifier
     @Id
