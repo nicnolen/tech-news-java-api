@@ -6,6 +6,7 @@ import com.technews.repository.UserRepository;
 import com.technews.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,5 +29,12 @@ public class PostController {
             p.setVoteCount(voteRepository.countVotesByPostId(p.getId()));
         }
         return postList;
+    }
+
+    @GetMapping("/api/posts/{id}")
+    public Post getPost(@PathVariable Integer id) {
+        Post returnPost = repository.getById(id);
+        returnPost.setVoteCount(voteRepository.countVotesByPostId(returnPost.getId()));
+        return returnPost;
     }
 }
