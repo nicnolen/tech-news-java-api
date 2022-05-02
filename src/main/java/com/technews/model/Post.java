@@ -1,7 +1,7 @@
 package com.technews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +23,7 @@ public class Post implements Serializable {
     @Transient
     private int voteCount;
     private Integer userId;
+
     // variable is not allowed to be null
     @NotNull
     // allows us to use the type Date in the database and signals to the JPA that these fields will house data of that type
@@ -30,9 +31,10 @@ public class Post implements Serializable {
     // name of the column
     @Column(name = "posted_at")
     private Date postedAt = new Date();
+
     @NotNull
     @Temporal(TemporalType.DATE)
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private Date updatedAt = new Date();
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
@@ -88,9 +90,11 @@ public class Post implements Serializable {
         this.voteCount = voteCount;
     }
 
+
     public Integer getUserId() {
         return userId;
     }
+
 
     public void setUserId(Integer userId) {
         this.userId = userId;
@@ -135,6 +139,7 @@ public class Post implements Serializable {
                 Objects.equals(getUpdatedAt(), post.getUpdatedAt()) &&
                 Objects.equals(getComments(), post.getComments());
     }
+
 
     @Override
     public int hashCode() {

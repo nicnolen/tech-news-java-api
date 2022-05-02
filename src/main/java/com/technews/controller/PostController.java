@@ -45,6 +45,7 @@ public class PostController {
     }
 
     // create new post
+
     @PostMapping("/api/posts")
     @ResponseStatus(HttpStatus.CREATED)
     public Post addPost(@RequestBody Post post) {
