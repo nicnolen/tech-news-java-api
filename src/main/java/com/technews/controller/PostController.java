@@ -73,4 +73,10 @@ public class PostController {
         }
         return returnValue;
     }
+
+    @DeleteMapping("/api/posts/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePost(@PathVariable int id) {
+        repository.deleteById(id);
+    }
 }
