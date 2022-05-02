@@ -6,6 +6,7 @@ import com.technews.repository.PostRepository;
 import com.technews.repository.UserRepository;
 import com.technews.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +53,34 @@ public class TechNewsController {
         boolean isPasswordValid = BCrypt.checkpw(user.getPassword(), sessionUserPassword);
         if(isPasswordValid == false) {
             model.addAttribute("notice", "Password is not valid!");
+            return "login";
+        }
+        sessionUser.setLoggedIn(true);
+        request.getSession().setAttribute("SESSION_USER", sessionUser);
+        return "redirect:/dashboard";
+    }
+
+    // POST AddUser endpoint
+    @PostMapping("/users")
+    public String signup(@ModelAttribute User user, Model model, HttpServletRequest request) throws Exception {
+        if ((user.getUsername().equals(null) || user.getUsername().isEmpty()) || (user.getPassword().equals(null) || user.getPassword().isEmpty()) || (user.getEmail().equals(null) || user.getPassword().isEmpty())) {
+            model.addAttribute("notice", "In order to signup username, email address and password must be populated!");
+            return "login";
+        }
+        try {
+            // Encrypt password
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("notice", "Email address is not available! Please choose a different unique email address.");
+            return "login";
+        }
+        User sessionUser = userRepository.findUserByEmail(user.getEmail());
+        try {
+            if (sessionUser.equals(null)) {
+            }
+        } catch (NullPointerException e) {
+            model.addAttribute("notice", "User is not recognized!");
             return "login";
         }
         sessionUser.setLoggedIn(true);
