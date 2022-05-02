@@ -5,9 +5,8 @@ import com.technews.repository.PostRepository;
 import com.technews.repository.UserRepository;
 import com.technews.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +35,12 @@ public class PostController {
         Post returnPost = repository.getById(id);
         returnPost.setVoteCount(voteRepository.countVotesByPostId(returnPost.getId()));
         return returnPost;
+    }
+
+    @PostMapping("/api/posts")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Post addPost(@RequestBody Post post) {
+        repository.save(post);
+        return post;
     }
 }
