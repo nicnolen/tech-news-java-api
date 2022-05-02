@@ -25,6 +25,10 @@
 - Spring Data JPA
 - ClearDB MySQL
 
+## Description
+
+This app allows a user to post an article from another source and other users can vote or comment on the post.
+
 ## Usage Instructions
 
 To see and use the deployed site, follow this link to [Heroku](https://cc-java-api-32.herokuapp.com)
