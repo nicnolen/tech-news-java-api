@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<!-- Specifies that the login page is bound to the layout.html main template page -->
+<div layout:fragment="content">
+    <div th:if="${notice}" class="flash-message">
+        <h3>[[${notice}]]</h3>
+    </div>
+    <!--th:action="@{/users}" designates the API route for submitting the form -->
+    <!-- th:object="${User}" designates that the submitted form fields will comprise a user -->
+    <!-- method attribute designates this as a post request -->
+    <form action="#" th:action="@{/users/login}" th:object="${user}" method="post" class="login-form">
+        <div>
+            <label>email:</label>
+            <!-- th:field gives a name to the field -->
+            <input type="text" th:field="*{email}"/>
+        </div>
+        <div>
+            <label>password:</label>
+            <input type="password" th:field="*{password}"/>
+        </div>
+        <div>
+            <button type="submit">login</button>
+        </div>
+    </form>
+    <form action="#" th:action="@{/users}" th:object="${user}" method="post" class="signup-form">
+        <div>
+            <label>username:</label>
+            <input type="text" th:field="*{username}"/>
+        </div>
+        <div>
+            <label>email:</label>
+            <input type="text" th:field="*{email}"/>
+        </div>
+        <div>
+            <label>password:</label>
+            <input type="password" th:field="*{password}"/>
+        </div>
+        <div>
+            <button type="submit">signup</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
