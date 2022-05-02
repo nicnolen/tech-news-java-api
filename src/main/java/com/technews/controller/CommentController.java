@@ -31,4 +31,9 @@ public class CommentController {
     public Comment createComment(@RequestBody Comment comment) {
         return repository.save(comment);
     }
+
+    @PutMapping("/api/updatedComment")
+    public Comment updateComment(@RequestBody Comment comment) {
+        return repository.save(comment);
+    }
 }
