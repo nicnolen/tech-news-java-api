@@ -5,9 +5,8 @@ import com.technews.model.User;
 import com.technews.repository.UserRepository;
 import com.technews.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,4 +43,13 @@ public class UserController {
         }
         return returnUser;
     }
+
+    @PostMapping("/api/users")
+    public User addUser(@RequestBody User user) {
+        // encrypt password
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        repository.save(user);
+        return user;
+    }
 }
+
