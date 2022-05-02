@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 public class CommentController {
+    // assigned CommentRepository to a variable called repository
     @Autowired
     CommentRepository repository;
 

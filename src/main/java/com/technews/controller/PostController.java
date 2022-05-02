@@ -1,6 +1,7 @@
 package com.technews.controller;
 
 import com.technews.model.Post;
+import com.technews.model.User;
 import com.technews.model.Vote;
 import com.technews.repository.PostRepository;
 import com.technews.repository.UserRepository;
@@ -24,6 +25,7 @@ public class PostController {
     UserRepository userRepository;
 
     // get all posts
+
     @GetMapping("/api/posts")
     public List<Post> getAllPosts() {
         List<Post> postList = repository.findAll();
@@ -34,6 +36,7 @@ public class PostController {
     }
 
     // get posts by id
+
     @GetMapping("/api/posts/{id}")
     public Post getPost(@PathVariable Integer id) {
         Post returnPost = repository.getById(id);
