@@ -1,5 +1,6 @@
 package com.technews.controller;
 
+import com.technews.model.Comment;
 import com.technews.model.Post;
 import com.technews.model.User;
 import com.technews.repository.CommentRepository;
@@ -86,6 +87,7 @@ public class HomePageController {
             return "login";
         }
     }
+    // endpoint for if a user tries to make a post but forgets to include a post title or link
     @GetMapping("/dashboardEmptyTitleAndLink")
     public String dashboardEmptyTitleAndLinkHandler(Model model, HttpServletRequest request) throws Exception {
         setupDashboardPage(model, request);
