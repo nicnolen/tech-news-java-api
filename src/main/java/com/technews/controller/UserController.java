@@ -24,10 +24,15 @@ public class UserController {
     // combines the route ("/api/users") and the type of HTTP method used (GET) to provide the method with a unique endpoint
     @GetMapping("/api/users")
     public List<User> getAllUsers() {
+        // get a list of all users and assign it to the userList variable
         List<User> userList = repository.findAll();
+        // for every User assigned to the variable u in userList...
         for (User u : userList) {
+            // get a list of posts for every User assigned to the variable u in userList
             List<Post> postList = u.getPosts();
+            // iterate over each post assigned to the variable p in postList
             for (Post p : postList) {
+                // pass in countVotesByPostId() method to count posts by id and use to getId() method to obtain the id of the post
                 p.setVoteCount(voteRepository.countVotesByPostId((p.getId())));
             }
         }
@@ -37,22 +42,29 @@ public class UserController {
     @GetMapping("/api/users/{id}")
     // @pathVariable lets you enter the int id into the request URL as a parameter
     public User getUserById(@PathVariable Integer id) {
+        // find a user by id
         User returnUser = repository.getById(id);
         List<Post> postList = returnUser.getPosts();
         for (Post p : postList) {
             p.setVoteCount(voteRepository.countVotesByPostId(p.getId()));
         }
+        // return a single user
         return returnUser;
     }
 
+    // allows us to add a user to the database
     @PostMapping("/api/users")
+    // @RequestBody annotation maps the body of this request to a transfer object and then deserializes the body onto a Java object for easier use
     public User addUser(@RequestBody User user) {
         // encrypt password
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        // save the user
         repository.save(user);
+        // return the new user
         return user;
     }
 
+    // allows us to update a user based on a specific id
     @PutMapping("/api/users/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         User tempUser = repository.getById(id);
@@ -64,6 +76,7 @@ public class UserController {
         return user;
     }
 
+    // allows us to delete an associated user
     @DeleteMapping("/api/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable int id) {
