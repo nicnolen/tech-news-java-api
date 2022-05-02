@@ -2,6 +2,7 @@ package com.technews.controller;
 
 import com.technews.model.Post;
 import com.technews.model.User;
+import com.technews.model.Vote;
 import com.technews.repository.CommentRepository;
 import com.technews.repository.PostRepository;
 import com.technews.repository.UserRepository;
@@ -11,11 +12,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class TechNewsController {
@@ -145,6 +145,18 @@ public class TechNewsController {
             } else {
                 return "redirect:/login";
             }
+        }
+    }
+
+    @PutMapping("/posts/upvote")
+    public void addVoteCommentsPage(@RequestBody Vote vote, HttpServletRequest request, HttpServletResponse response) {
+        if (request.getSession(false) != null) {
+            Post returnPost = null;
+            User sessionUser = (User) request.getSession().getAttribute("SESSION_USER");
+            vote.setUserId(sessionUser.getId());
+            voteRepository.save(vote);
+            returnPost = postRepository.getById(vote.getPostId());
+            returnPost.setVoteCount(voteRepository.countVotesByPostId(vote.getPostId()));
         }
     }
 }
