@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Specify Thymeleaf namespace (ns) definitions and allow Thymeleaf syntax in the document -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- layout: title-pattern makes teh title dynamic -->
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Just Tech News</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>
+            <a href="/">Just Tech News</a>
+        </h1>
+        <nav>
+            <!-- th:if= is a conditional statement from Thymeleaf -->
+            <div th:if="${loggedIn}">
+                <a th:href="@{/dashboard}">dashboard</a>
+                <a th:href="@{/users/logout}">logout</a>
+            </div>
+            <!-- th:unless happens when the condition isnt met -->
+            <div th:unless="${loggedIn}">
+                <!-- th:href dynamically changes the <a> element's href values based on the evaluation of the if conditionals -->
+                <a th:href="@{/login}">login</a>
+            </div>
+        </nav>
+    </header>
+    <!-- layout:fragment="content" allows other templates to be displayed in this section of the page -->
+    <main layout:fragment="content">
+        <p>This is filled by the content template.</p>
+    </main>
+    <footer>
+        Thanks for visiting!
+    </footer>
+</div>
+</body>
+</html>
