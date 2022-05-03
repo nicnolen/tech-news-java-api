@@ -75,6 +75,36 @@
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>3.0.3</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.10.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- Sass compiler -->
+			<plugin>
+				<groupId>nl.geodienstencentrum.maven</groupId>
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>3.7.2</version>
+				<configuration>
+					<!-- using dedicated folders seems to work best with rebuild-required detection, at least when being a bit early to the party (i. e. in generate-resource phase) -->
+					<sassSourceDirectory>${basedir}/src/main/resources/static/sass/</sassSourceDirectory>
+					<destination>${basedir}/src/main/resources/static/css/</destination>
+				</configuration>
+				<executions>
+					<execution>
+						<id>update-stylesheets</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>update-stylesheets</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
